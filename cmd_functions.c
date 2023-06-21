@@ -56,6 +56,7 @@ void push(stack_t **stack, unsigned int line_number)
     {
         if (isdigit(element_n[i]) == 0)
         {
+            free(element_n);
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
