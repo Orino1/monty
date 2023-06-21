@@ -26,35 +26,35 @@ int main(int argc, char const *argv[])
     if (argc == 2)
     {
         FILE *file;
-        char buffer[BUFFER], *token;
+        char buffer_line[1024], *token;
         int cmd_num;
         unsigned int i;
-        stack_t *head, *top_element;
+        stack_t *stack_head, *top_element;
 
 
-        head = NULL;
-        top_element = head;
+        stack_head = NULL;
+        top_element = stack_head;
         file = fopen(argv[1], "r");
         if (file == NULL)
         {
             fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
             return (EXIT_FAILURE);
         }
-        for (i = 1; fgets(buffer, sizeof(buffer), file) != NULL; i++)
+        for (i = 1; fgets(buffer_line, sizeof(buffer_line), file) != NULL; i++)
         {
-            if (line_checker(buffer) == 0)
+            if (line_checker(buffer_line) == 0)
             {
                 cmd_num = sizeof(instruction_cmd)/sizeof(instruction_cmd[0]);
-                token = strtok(buffer , " \n");
+                token = strtok(buffer_line , " \n");
                 if (cmd_finder(token, cmd_num, &top_element, i) == 1)
                 {
                     fprintf(stderr, "L%d: unknown instruction %s\n", i, token);
-                    free(token);
                     exit(EXIT_FAILURE);
                 }
             }
         }
         fclose(file);
+        free_dlistint(stack_head);
         return (EXIT_SUCCESS);
     }
     fprintf(stderr, "USAGE: monty file\n");
