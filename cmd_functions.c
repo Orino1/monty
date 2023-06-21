@@ -12,7 +12,7 @@ stack_t *add_element_at_top(stack_t **top_element, int n)
 	if (new == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
 	}
 	new->n = n;
@@ -52,7 +52,7 @@ void push(stack_t **stack, unsigned int line_number)
     if (element_n == NULL)
     {
         fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     for (i = 0; element_n[i] != '\0'; i++)
@@ -60,7 +60,7 @@ void push(stack_t **stack, unsigned int line_number)
         if (isdigit(element_n[i]) == 0)
         {
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            free_dlistint(stack_head);
+            free_dlistint(*stack);
             exit(EXIT_FAILURE);
         }
     }
@@ -85,7 +85,7 @@ void pop(stack_t **stack, unsigned int line_number)
     if (*stack == NULL)
     {
         fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     temp = (*stack)->prev;
@@ -110,7 +110,7 @@ void swap(stack_t **stack, unsigned int line_number)
     if (temp == NULL)
     {
         fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     swapper = temp->n;
@@ -126,7 +126,7 @@ void add(stack_t **stack, unsigned int line_number)
     if (temp == NULL)
     {
         fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     sum = temp->n;
@@ -148,7 +148,7 @@ void sub(stack_t **stack, unsigned int line_number)
     if (temp == NULL)
     {
         fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     result = (temp->n - (*stack)->n);
@@ -164,13 +164,13 @@ void divide(stack_t **stack, unsigned int line_number)
     if (temp == NULL)
     {
         fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     if ((*stack)->n == 0)
     {
         fprintf(stderr, "L%d: division by zero\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     
@@ -187,7 +187,7 @@ void mul(stack_t **stack, unsigned int line_number)
     if (temp == NULL)
     {
         fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     result = (temp->n * (*stack)->n);
@@ -203,13 +203,13 @@ void mod(stack_t **stack, unsigned int line_number)
     if (temp == NULL)
     {
         fprintf(stderr, "L%d: can't mod, stack too short\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     if ((*stack)->n == 0)
     {
         fprintf(stderr, "L%d: division by zero\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     result = (temp->n % (*stack)->n);
@@ -223,13 +223,13 @@ void pchar(stack_t **stack, unsigned int line_number)
     if (*stack == NULL)
     {
         fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     if ((*stack)->n > 127)
     {
         fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
-        free_dlistint(stack_head);
+        free_dlistint(*stack);
         exit(EXIT_FAILURE);
     }
     ascii_char = (*stack)->n;
@@ -305,12 +305,17 @@ void rotr(stack_t **stack, unsigned int line_number)
         *stack = head;
     }
 }
-void free_dlistint(stack_t *head)
+void free_dlistint(stack_t *current)
 {
-	stack_t *next;
+	stack_t *next, *head;
 
-	if (head != NULL)
+	if (current != NULL)
 	{
+        head = current;
+        while (head->prev != NULL)
+        {
+            head = head->prev;
+        }
 		while (head->next != NULL)
 		{
 			next = head->next;
