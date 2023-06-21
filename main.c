@@ -29,10 +29,8 @@ int main(int argc, char const *argv[])
         char buffer_line[1024], *token;
         int cmd_num;
         unsigned int i;
-        stack_t *stack_head, *top_element;
+        stack_t *top_element;
 
-
-        stack_head = NULL;
         top_element = NULL;
         file = fopen(argv[1], "r");
         if (file == NULL)
