@@ -49,6 +49,7 @@ int main(int argc, char const *argv[])
                 if (cmd_finder(token, cmd_num, &top_element, i) == 1)
                 {
                     fprintf(stderr, "L%d: unknown instruction %s\n", i, token);
+                    free(token);
                     exit(EXIT_FAILURE);
                 }
             }
