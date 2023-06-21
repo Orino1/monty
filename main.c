@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
 
 
         stack_head = NULL;
-        top_element = stack_head;
+        top_element = NULL;
         file = fopen(argv[1], "r");
         if (file == NULL)
         {
@@ -54,7 +54,7 @@ int main(int argc, char const *argv[])
             }
         }
         fclose(file);
-        free_dlistint(stack_head);
+        free_dlistint(top_element);
         return (EXIT_SUCCESS);
     }
     fprintf(stderr, "USAGE: monty file\n");
