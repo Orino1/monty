@@ -3,7 +3,6 @@
 #include <string.h>
 #include "monty.h"
 
-//to do: handle nigative numbers
 int cmd_finder(char *token, int cmd_num, stack_t **top_element, unsigned int line_number)
 {
     int i;
