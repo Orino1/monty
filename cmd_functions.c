@@ -33,6 +33,7 @@ void pall(stack_t **top_element, unsigned int line_number)
 {
     stack_t *current;
 
+    (void)line_number;
     current = *top_element;
     while (current != NULL)
     {
@@ -128,6 +129,8 @@ void add(stack_t **stack, unsigned int line_number)
 }
 void nop(stack_t **stack, unsigned int line_number)
 {
+    (void)line_number;
+    (void)stack;
 }
 void sub(stack_t **stack, unsigned int line_number)
 {
@@ -223,6 +226,7 @@ void pstr(stack_t **stack, unsigned int line_number)
     char ascii_char;
     int i;
 
+    (void)line_number;
     if (*stack == NULL)
     {
         printf("\n");
@@ -247,6 +251,7 @@ void rotl(stack_t **stack, unsigned int line_number)
 {
     stack_t *temp, *head;
 
+    (void)line_number;
     temp = *stack;
     head = *stack;
     if (temp != NULL && temp->prev != NULL)
@@ -269,6 +274,7 @@ void rotr(stack_t **stack, unsigned int line_number)
 {
     stack_t *temp, *head;
 
+    (void)line_number;
     head = *stack;
     if (head != NULL && head->prev != NULL)
     {
