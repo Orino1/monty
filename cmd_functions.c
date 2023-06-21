@@ -12,7 +12,7 @@ stack_t *add_element_at_top(stack_t **top_element, int n)
 	if (new == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-        free_dlistint(*stack);
+        free_dlistint(*top_element);
         exit(EXIT_FAILURE);
 	}
 	new->n = n;
@@ -21,7 +21,6 @@ stack_t *add_element_at_top(stack_t **top_element, int n)
 		new->next = NULL;
 		new->prev = NULL;
 		*top_element = new;
-        stack_head = new;
 		return (new);
 	}
 	new->next = NULL;
